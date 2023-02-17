@@ -9,6 +9,7 @@ function useFetch(url: string) {
 
   useEffect(()=>{
     const fetchData = async () => {
+      const aboartControllar = new AbortController();
         try {
           setLoading(true);
           const res = await axios.get(url);
@@ -19,7 +20,13 @@ function useFetch(url: string) {
           finally {
           setLoading(false);
         }
+
+        return ()=>{
+          aboartControllar.abort();
+        }
       };
+
+      
       fetchData()
 
 
